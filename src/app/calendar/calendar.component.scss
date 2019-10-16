@@ -1,0 +1,33 @@
+table {
+  width: 100%;
+  margin-bottom: 1rem;
+
+  td, th {
+    border: 1px solid white;
+    padding: .5rem 1rem;
+  }
+
+  td {
+    text-align: center;
+    transition: all .2s;
+
+    &.disabled {
+      opacity: .5;
+    }
+
+    &:hover:not(.disabled) {
+      background: darkgrey;
+      cursor: pointer;
+    }
+  }
+
+  .selected {
+    color: sandybrown;
+  }
+
+  .active {
+    color: #e83e8c;
+    font-weight: bold;
+    background: grey;
+  }
+}

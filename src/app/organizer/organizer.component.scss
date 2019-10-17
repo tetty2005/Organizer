@@ -6,6 +6,11 @@ section {
     margin-bottom: 1rem;
   }
 
+  input {
+    margin: 10px 0;
+    width: 100%;
+  }
+
   .task {
     display: flex;
     justify-content: space-between;

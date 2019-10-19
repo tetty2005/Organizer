@@ -5,10 +5,10 @@
   </header>
   <main>
     <ul>
-      <li class="task">
+      <li class="task" *ngFor="let task of tasks; let i = index">
         <span>
           <strong>1</strong>
-          Some Name
+          {{task.title}}
         </span>
         <button class="btn btn-primary">Remove</button>
       </li>

@@ -4,15 +4,17 @@
     <hr/>
   </header>
   <main>
-    <ul>
+    <ul *ngIf="tasks.length; else noTasks">
       <li class="task" *ngFor="let task of tasks; let i = index">
         <span>
-          <strong>1</strong>
-          {{task.title}}
+          <strong>{{task.title}}</strong>
         </span>
-        <button class="btn btn-primary">Remove</button>
+        <button class="btn btn-primary" (click)="remove(task)">Remove</button>
       </li>
     </ul>
+    <ng-template #noTasks>
+      <p class="text-center">No tasks yet...</p>
+    </ng-template>
   </main>
   <footer>
     <form (ngSubmit)="submit()" [formGroup]="form">

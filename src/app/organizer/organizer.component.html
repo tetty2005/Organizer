@@ -5,11 +5,26 @@
   </header>
   <main>
     <ul *ngIf="tasks.length; else noTasks">
-      <li class="task" *ngFor="let task of tasks; let i = index">
-        <span>
-          <strong>{{task.title}}</strong>
-        </span>
-        <button class="btn btn-primary" (click)="remove(task)">Remove</button>
+      <li class="task" *ngFor="let task of tasks">
+        <div class="input-group">
+          <strong *ngIf="!task.editMode; else editTitle" class="form-control">{{task.title}}</strong>
+          <ng-template #editTitle>
+            <input class="form-control task-edit" type="text" [(ngModel)]="editingTitle">
+          </ng-template>
+          <div class="input-group-append" id="button-addon4">
+            <button *ngIf="!task.editMode; else editBtn" class="btn btn-light" type="button" (click)="edit(task)">
+              <i class="material-icons btn-icon">edit</i>
+            </button>
+            <ng-template #editBtn>
+              <button class="btn btn-outline-light" (click)="updateTitle(task)">
+                <i class="material-icons btn-icon">done</i>
+              </button>
+            </ng-template>
+            <button class="btn btn-danger material-icons" type="button" (click)="remove(task)">
+              <i class="material-icons btn-icon">delete</i>
+            </button>
+          </div>
+        </div>
       </li>
     </ul>
     <ng-template #noTasks>
@@ -18,7 +33,7 @@
   </main>
   <footer>
     <form (ngSubmit)="submit()" [formGroup]="form">
-      <input type="text" formControlName="title">
+      <input class="form-control task-create" type="text" formControlName="title" placeholder="Enter Task Title">
       <button type="submit" class="btn btn-primary btn-block">Add</button>
     </form>
   </footer>

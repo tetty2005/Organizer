@@ -12,6 +12,7 @@ import { switchMap } from 'rxjs/operators';
 export class OrganizerComponent implements OnInit {
 
   form: FormGroup;
+  editingTitle: string;
   tasks: Task[] = [];
 
   constructor(private dateService: DateService,
@@ -33,15 +34,32 @@ export class OrganizerComponent implements OnInit {
       date: this.dateService.date.value.format('DD-MM-YYYY')
     };
 
-    this.tasksService.create(task).subscribe(resp => {
-      this.tasks.push(task);
+    this.tasksService.create(task).subscribe(createdTask => {
+      this.tasks.push(createdTask);
       this.form.reset();
     }, err => console.error(err));
   }
 
+  edit(task: Task) {
+    task.editMode = true;
+    this.editingTitle = task.title;
+  }
+
+  updateTitle(task: Task) {
+    const oldTitle: string = task.title;
+    delete task.editMode;
+    task.title = this.editingTitle;
+    this.tasksService.update(task).subscribe(() => {
+      console.log('Task was successfully updated!', task);
+    }, err => {
+      console.error(err);
+      task.title = oldTitle;
+    });
+  }
+
   remove(task: Task) {
     this.tasksService.remove(task).subscribe(() => {
-      this.tasks = this.tasks.filter(t => t.id !== task.id)
+      this.tasks = this.tasks.filter(t => t.id !== task.id);
     }, err => console.error(err));
   }
 }

@@ -8,6 +8,7 @@ export interface Task {
   id?: string;
   title: string;
   date?: string;
+  editMode?: boolean;
 }
 
 interface CreateResponse {
@@ -40,7 +41,13 @@ export class TasksService {
       }));
   }
 
+  update(task: Task) {
+    return this.http
+      .patch<void>(`${TasksService.url}/${task.date}/${task.id}.json`, task);
+  }
+
   remove(task: Task) {
-    return this.http.delete<void>(`${TasksService.url}/${task.date}/${task.id}.json`)
+    return this.http
+      .delete<void>(`${TasksService.url}/${task.date}/${task.id}.json`);
   }
 }
